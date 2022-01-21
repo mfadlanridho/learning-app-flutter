@@ -8,16 +8,37 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        children: [
-          Icon(Icons.search),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(hintText: 'Find Course'),
+      decoration: BoxDecoration(
+        color: Color(0xffF4F3FD),
+        borderRadius: BorderRadius.all(
+          Radius.circular(12),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Row(
+          children: [
+            Icon(Icons.search),
+            SizedBox(
+              width: 15,
             ),
-          ),
-          TextButton(onPressed: () {}, child: Icon(Icons.notes))
-        ],
+            Expanded(
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Find Course',
+                  isDense: true,
+                  contentPadding: EdgeInsets.all(0),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                ),
+              ),
+            ),
+            TextButton(onPressed: () {}, child: Icon(Icons.notes))
+          ],
+        ),
       ),
     );
   }

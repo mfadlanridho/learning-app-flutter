@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_learning/constants.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -264,7 +265,7 @@ class ProfileHeader extends StatelessWidget {
               Text(
                 'Hi, Kristin',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: kTitleFontSize,
                   color: Colors.white,
                   fontWeight: FontWeight.w400,
                 ),
