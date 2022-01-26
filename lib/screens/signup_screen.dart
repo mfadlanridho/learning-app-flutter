@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:online_learning/constants.dart';
 import 'package:online_learning/screens/login_screen.dart';
 import 'package:online_learning/screens/navigation_screen.dart';
 import 'package:online_learning/widgets/button.dart';
@@ -28,16 +29,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Sign Up',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF1F1F39),
+            Expanded(
+              flex: 1,
+              child: Container(
+                padding: const EdgeInsets.all(kPadding),
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF1F1F39),
+                  ),
+                ),
               ),
             ),
             Expanded(
+              flex: 5,
               child: Container(
+                padding: EdgeInsets.all(kPadding),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: Colors.white,
@@ -48,16 +58,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     AuthInputField(
                       title: 'Email',
                     ),
+                    SizedBox(
+                      height: kPadding,
+                    ),
                     AuthInputField(
                       title: 'Password',
                     ),
+                    SizedBox(
+                      height: kPadding,
+                    ),
                     Button(
-                      title: 'CreateAccount',
+                      title: 'Create Account',
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) => NavigationScreen()),
                         );
                       },
+                      padding: kPadding,
+                      borderRadius: 12,
+                    ),
+                    SizedBox(
+                      height: kPadding,
                     ),
                     TermsAndConditionsCheckbox(agreed: agreed),
                     TextButton(
@@ -77,7 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
