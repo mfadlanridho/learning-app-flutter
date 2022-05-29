@@ -1,10 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:online_learning/constants.dart';
+import 'package:online_learning/items/course_material.dart';
+import 'package:online_learning/screens/course_screen.dart';
+import '../items/all_courses_list.dart';
+import '../items/course.dart';
+import '../items/courses_list.dart';
 
+import '../widgets/course_list_tile.dart';
 import '../widgets/search_bar.dart';
 
-class CoursesPage extends StatelessWidget {
+class CoursesPage extends StatefulWidget {
   const CoursesPage({Key? key}) : super(key: key);
+
+  @override
+  State<CoursesPage> createState() => _CoursesPageState();
+}
+
+class _CoursesPageState extends State<CoursesPage> {
+  List<Course> shownCourses = [];
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      shownCourses = courses;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,192 +38,47 @@ class CoursesPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Course',
-                  style: TextStyle(
-                    fontSize: kTitleFontSize,
-                  ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 15.0),
+              child: Text(
+                'My Courses',
+                style: TextStyle(
+                  fontSize: kTitleFontSize,
                 ),
-                CircleAvatar(),
-              ],
+              ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            SearchBar(),
-            SizedBox(height: 15),
-            // Text(
-            //   'Courses',
-            //   style: TextStyle(
-            //     fontSize: 18,
-            //   ),
-            // ),
-            // SizedBox(height: 15),
-            // CourseSelection(),
-            // SizedBox(height: 15),
-            CourseListTile()
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CourseListTile extends StatelessWidget {
-  const CourseListTile({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(12),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(0, 2), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8), // Image border
-            child: Image.asset(
-              'images/course01.png',
-              width: 68,
-              height: 68,
-              fit: BoxFit.fitWidth,
+            SearchBar(
+              onChanged: (String s) {
+                setState(
+                  () {
+                    if (s.isEmpty) {
+                      shownCourses = courses;
+                    } else {
+                      shownCourses = courses.where((course) => course.name.toLowerCase().contains(s.toLowerCase())).toList();
+                    }
+                  },
+                );
+              },
             ),
-          ),
-          SizedBox(
-            width: 30,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Product Design v1.0',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
+            const SizedBox(height: 15),
+            Container(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: shownCourses.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return CourseListTile(
+                    course: shownCourses[index],
+                    onGoBack: () {
+                      setState(() {});
+                    },
+                  );
+                },
               ),
-              SizedBox(
-                height: 5,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.person,
-                    color: Color(0xffB8B8D2),
-                  ),
-                  Text(
-                    'Robertson Connie',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xffB8B8D2),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Row(
-                children: [
-                  Text(
-                    '\$190',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xff3D5CFF),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Container(
-                    width: 60,
-                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-                    decoration: BoxDecoration(
-                      color: Color(0xffFFEBF0),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(13),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '16 hours',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Color(0xffFF6905),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class CourseSelection extends StatelessWidget {
-  const CourseSelection({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CourseSelectionButton(),
-        SizedBox(width: 10),
-        CourseSelectionButton(),
-        SizedBox(width: 10),
-        CourseSelectionButton(),
-      ],
-    );
-  }
-}
-
-class CourseSelectionButton extends StatelessWidget {
-  const CourseSelectionButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 75,
-      height: 30,
-      decoration: BoxDecoration(
-        color: Color(0xff3D5CFF),
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
-        ),
-      ),
-      child: TextButton(
-        onPressed: () {},
-        child: Text(
-          'All',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        style: TextButton.styleFrom(
-          primary: Colors.white,
+            ),
+          ],
         ),
       ),
     );

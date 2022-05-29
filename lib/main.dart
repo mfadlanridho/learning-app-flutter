@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:online_learning/items/all_courses_list.dart';
 import 'package:online_learning/screens/onboarding_screen.dart';
 import 'package:online_learning/screens/signup_screen.dart';
 
+import 'items/course.dart';
+import 'items/course_material.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  UpdateAllCoursesList();
   runApp(const MyApp());
 }
 

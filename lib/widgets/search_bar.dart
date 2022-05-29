@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({
-    Key? key,
-  }) : super(key: key);
+  final void Function(String)? onChanged;
+
+  const SearchBar({Key? key, this.onChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +34,7 @@ class SearchBar extends StatelessWidget {
                   errorBorder: InputBorder.none,
                   disabledBorder: InputBorder.none,
                 ),
+                onChanged: onChanged,
               ),
             ),
             // TextButton(onPressed: () {}, child: Icon(Icons.notes))

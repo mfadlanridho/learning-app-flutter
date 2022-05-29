@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:online_learning/items/all_courses_list.dart';
+import 'package:online_learning/items/course.dart';
+import 'package:online_learning/items/courses_list.dart';
 import 'package:online_learning/pages/home_page.dart';
 import 'package:online_learning/constants.dart';
 import 'package:online_learning/screens/navigation_screen.dart';
@@ -21,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   String email = '';
   String password = '';
+  String authErrorText = "";
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.white,
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     AuthInputField(
                       keyboardType: TextInputType.emailAddress,
@@ -89,16 +94,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         } catch (e) {
                           print(e);
+                          setState(() {
+                            String str = e.toString();
+                            var parts = str.split(']');
+                            var error = parts.sublist(1);
+                            authErrorText = error.toString();
+                          });
                         }
                       },
                     ),
-                    // HyperlinkText(
-                    //   'Forget Password?',
-                    //   onTap: () {},
-                    // ),
-                    SizedBox(
-                      height: kPadding,
-                    ),
+                    Text(authErrorText),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -106,14 +111,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         HyperlinkText('Sign Up', onTap: () => Navigator.pop(context)),
                       ],
                     ),
-                    // Row(
-                    //   children: <Widget>[
-                    //     Expanded(child: Divider(thickness: 1)),
-                    //     Text('Or login with'),
-                    //     Expanded(child: Divider(thickness: 1)),
-                    //   ],
-                    // ),
-                    // Center(child: Image.asset('images/google.png'))
                   ],
                 ),
               ),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:online_learning/constants.dart';
@@ -21,6 +22,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _auth = FirebaseAuth.instance;
   String email = '';
   String password = '';
+  String name = '';
+  String authErrorText = '';
   bool agreed = false;
 
   @override
@@ -77,27 +80,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(
                       height: kPadding,
                     ),
+                    AuthInputField(
+                      title: 'Name',
+                      onChanged: (value) {
+                        name = value;
+                      },
+                    ),
+                    SizedBox(
+                      height: kPadding,
+                    ),
                     Button(
                       title: 'Create Account',
                       onPressed: () async {
+                        if (name == '') {
+                          authErrorText = '[Name field is not filled]';
+                          return;
+                        }
                         try {
                           final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
                           if (newUser != null) {
+                            await newUser.user!.updateDisplayName(name);
+                            FirebaseFirestore.instance.collection('users').doc(email).set({'email': email, 'courses': {}});
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(builder: (context) => NavigationScreen()),
                             );
                           }
                         } catch (e) {
-                          print(e);
+                          setState(() {
+                            String str = e.toString();
+                            var parts = str.split(']');
+                            var error = parts.sublist(1);
+                            authErrorText = error.toString();
+                          });
                         }
                       },
                       padding: kPadding,
                       borderRadius: 12,
                     ),
-                    SizedBox(
-                      height: kPadding,
-                    ),
-                    TermsAndConditionsCheckbox(agreed: agreed),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -112,6 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                     ),
+                    Text(authErrorText),
                   ],
                 ),
               ),

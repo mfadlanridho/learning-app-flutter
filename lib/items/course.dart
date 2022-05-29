@@ -1,11 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:online_learning/items/course_material.dart';
 
 class Course {
-  late String teacher;
-  late List<CourseMaterial> materials;
+  String id;
+  String teacher;
+  String name;
+  List<CourseMaterial> materials = <CourseMaterial>[];
+  String imgURL;
 
-  Course(String teacher, List<CourseMaterial> materials) {
-    this.teacher = teacher;
-    this.materials = materials;
+  Course({this.id = '', this.teacher = '', this.name = '', this.imgURL = '', List<CourseMaterial>? materials}) {
+    if (materials != null) {
+      this.materials = materials;
+    }
+  }
+
+  void AddMaterial(CourseMaterial material) {
+    materials.add(material);
   }
 }

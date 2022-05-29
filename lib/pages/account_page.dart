@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:online_learning/constants.dart';
 import 'package:online_learning/screens/login_screen.dart';
@@ -14,20 +15,27 @@ class AccountPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Account',
-                style: TextStyle(
-                  fontSize: kTitleFontSize,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                child: Text(
+                  'Account',
+                  style: TextStyle(
+                    fontSize: kTitleFontSize,
+                  ),
                 ),
               ),
-              Center(child: CircleAvatar()),
+              const SizedBox(
+                height: 15,
+              ),
+              // Center(child: CircleAvatar()),
               Expanded(
                 child: ListView(
                   children: <Widget>[
                     Card(
                       child: ListTile(
                         title: Text('Logout'),
-                        onTap: () {
+                        onTap: () async {
+                          await FirebaseAuth.instance.signOut();
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(builder: (context) => LoginScreen()),
                           );

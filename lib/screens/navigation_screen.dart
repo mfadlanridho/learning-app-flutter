@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:online_learning/pages/account_page.dart';
 import 'package:online_learning/pages/courses_page.dart';
+import 'package:online_learning/pages/create_course_page.dart';
 import 'package:online_learning/pages/home_page.dart';
 import 'package:online_learning/pages/message_page.dart';
 import 'package:online_learning/pages/search_page.dart';
@@ -34,10 +35,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
+    // HomePage(),
     CoursesPage(),
     SearchPage(),
-    MessagePage(),
+    CreateCoursePage(),
+    // MessagePage(),
     AccountPage(),
   ];
 
@@ -56,22 +58,26 @@ class _NavigationScreenState extends State<NavigationScreen> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.home),
+          //   label: 'Home',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
-            label: 'Course',
+            label: 'My Courses',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: 'Message',
+            icon: Icon(Icons.create),
+            label: 'Create Crouse',
           ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.message),
+          //   label: 'Message',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Account',
