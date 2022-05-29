@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:online_learning/pages/account_page.dart';
-import 'package:online_learning/pages/course_page.dart';
+import 'package:online_learning/pages/courses_page.dart';
 import 'package:online_learning/pages/home_page.dart';
 import 'package:online_learning/pages/message_page.dart';
 import 'package:online_learning/pages/search_page.dart';
@@ -13,11 +14,28 @@ class NavigationScreen extends StatefulWidget {
 }
 
 class _NavigationScreenState extends State<NavigationScreen> {
+  final _auth = FirebaseAuth.instance;
+  late User loggedInUser;
+
+  void getCurrentUser() {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      loggedInUser = user;
+      print(user.email);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
   int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    CoursePage(),
+    CoursesPage(),
     SearchPage(),
     MessagePage(),
     AccountPage(),

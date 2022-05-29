@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 
 class AuthInputField extends StatelessWidget {
   final String title;
+  final ValueChanged<String> onChanged;
+  final bool obscureText;
+  final TextInputType? keyboardType;
 
-  const AuthInputField({Key? key, required this.title}) : super(key: key);
+  const AuthInputField({
+    Key? key,
+    required this.title,
+    required this.onChanged,
+    this.obscureText = false,
+    TextInputType? this.keyboardType,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +30,8 @@ class AuthInputField extends StatelessWidget {
           style: TextStyle(
             fontSize: 14,
           ),
+          keyboardType: keyboardType,
+          obscureText: obscureText,
           decoration: InputDecoration(
             hintText: 'Enter your ${title.toLowerCase()}',
             border: OutlineInputBorder(
@@ -33,6 +44,7 @@ class AuthInputField extends StatelessWidget {
             }
             return null;
           },
+          onChanged: onChanged,
         ),
       ],
     );

@@ -36,7 +36,7 @@ class SearchBar extends StatelessWidget {
                 ),
               ),
             ),
-            TextButton(onPressed: () {}, child: Icon(Icons.notes))
+            // TextButton(onPressed: () {}, child: Icon(Icons.notes))
           ],
         ),
       ),

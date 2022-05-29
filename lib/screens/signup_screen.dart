@@ -4,6 +4,7 @@ import 'package:online_learning/constants.dart';
 import 'package:online_learning/screens/login_screen.dart';
 import 'package:online_learning/screens/navigation_screen.dart';
 import 'package:online_learning/widgets/button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../widgets/auth_input_field.dart';
 
@@ -17,12 +18,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final _auth = FirebaseAuth.instance;
+  String email = '';
+  String password = '';
+  bool agreed = false;
+
   @override
   Widget build(BuildContext context) {
-    String email = '';
-    String password = '';
-    bool agreed = false;
-
     return Scaffold(
       backgroundColor: Color(0xFFF0F0F2),
       body: SafeArea(
@@ -34,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Container(
                 padding: const EdgeInsets.all(kPadding),
                 alignment: Alignment.bottomLeft,
-                child: Text(
+                child: const Text(
                   'Sign Up',
                   style: TextStyle(
                     fontSize: 32,
@@ -47,7 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Expanded(
               flex: 5,
               child: Container(
-                padding: EdgeInsets.all(kPadding),
+                padding: const EdgeInsets.all(kPadding),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: Colors.white,
@@ -56,23 +58,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AuthInputField(
+                      keyboardType: TextInputType.emailAddress,
                       title: 'Email',
+                      onChanged: (value) {
+                        email = value;
+                      },
                     ),
                     SizedBox(
                       height: kPadding,
                     ),
                     AuthInputField(
                       title: 'Password',
+                      onChanged: (value) {
+                        password = value;
+                      },
+                      obscureText: true,
                     ),
                     SizedBox(
                       height: kPadding,
                     ),
                     Button(
                       title: 'Create Account',
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => NavigationScreen()),
-                        );
+                      onPressed: () async {
+                        try {
+                          final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+                          if (newUser != null) {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(builder: (context) => NavigationScreen()),
+                            );
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
                       },
                       padding: kPadding,
                       borderRadius: 12,
@@ -123,22 +140,19 @@ class TermsAndConditionsCheckbox extends StatelessWidget {
           onChanged: (value) {},
         ),
         Expanded(
-            child: RichText(
-          text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(text: 'By creating this account you agree with our ', style: DefaultTextStyle.of(context).style),
-              TextSpan(
-                text: 'terms & conditions.',
-                style: TextStyle(color: Colors.blue),
-                recognizer: TapGestureRecognizer()..onTap = () {},
-              ),
-            ],
-          ),
-        )
-            // Text(
-            //   'By creating this account you agree with our terms & conditions.',
-            // ),
+          child: RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(text: 'By creating this account you agree with our ', style: DefaultTextStyle.of(context).style),
+                TextSpan(
+                  text: 'terms & conditions.',
+                  style: TextStyle(color: Colors.blue),
+                  recognizer: TapGestureRecognizer()..onTap = () {},
+                ),
+              ],
             ),
+          ),
+        ),
       ],
     );
   }

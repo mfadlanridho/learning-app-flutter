@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_learning/constants.dart';
+import 'package:online_learning/screens/login_screen.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -21,15 +22,19 @@ class AccountPage extends StatelessWidget {
               ),
               Center(child: CircleAvatar()),
               Expanded(
-                child: ListView.builder(
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text('Favourite'),
-                      trailing: Icon(Icons.arrow_forward_ios),
-                      contentPadding: EdgeInsets.all(0),
-                    );
-                  },
+                child: ListView(
+                  children: <Widget>[
+                    Card(
+                      child: ListTile(
+                        title: Text('Logout'),
+                        onTap: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => LoginScreen()),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               )
             ],

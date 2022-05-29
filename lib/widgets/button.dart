@@ -17,7 +17,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius ?? 4),
+      borderRadius: BorderRadius.circular(12),
       child: TextButton(
         style: TextButton.styleFrom(
           backgroundColor: Color(0xFF3D5CFF),
@@ -25,7 +25,10 @@ class Button extends StatelessWidget {
         onPressed: onPressed,
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(padding ?? 0),
+            padding: EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 5,
+            ),
             child: Text(
               title,
               style: TextStyle(

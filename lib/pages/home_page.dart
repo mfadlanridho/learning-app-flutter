@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:online_learning/constants.dart';
 
@@ -262,7 +263,7 @@ class ProfileHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Hi, Kristin',
+                'Hi, ${FirebaseAuth.instance.currentUser!.email}',
                 style: TextStyle(
                   fontSize: kTitleFontSize,
                   color: Colors.white,
