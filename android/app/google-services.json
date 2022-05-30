@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "372296785126",
+    "project_id": "online-learning-10d41",
+    "storage_bucket": "online-learning-10d41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372296785126:android:4801718e56f004e8526f27",
+        "android_client_info": {
+          "package_name": "com.mfadlanridho.online_learning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "372296785126-qfotml2u5tola98n0635s46l2cch92d6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvfbbjR5erHdw42EGVMobAoAHKaYLmzEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "372296785126-qfotml2u5tola98n0635s46l2cch92d6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "372296785126-h9li561skcmsraah31oek4oreglri57q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mfadlanridho.onlineLearning"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

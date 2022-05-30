@@ -3,10 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:online_learning/items/all_courses_list.dart';
 import 'package:online_learning/items/course.dart';
 
 import '../constants.dart';
 import '../items/course_material.dart';
+import '../screens/course_screen.dart';
 
 class CreateCoursePage extends StatefulWidget {
   const CreateCoursePage({Key? key}) : super(key: key);
@@ -36,6 +38,7 @@ class _CreateCoursePageState extends State<CreateCoursePage> {
 
   @override
   void initState() {
+    super.initState();
     // TODO: implement initState
     AddMaterial();
   }
@@ -68,6 +71,7 @@ class _CreateCoursePageState extends State<CreateCoursePage> {
       'imgURL': course.imgURL,
       'materials': FieldValue.arrayUnion(materialsList),
     });
+    UpdateAllCoursesList();
   }
 
   @override
@@ -176,6 +180,18 @@ class _CreateCoursePageState extends State<CreateCoursePage> {
                             error = !Validate();
                             if (!error) {
                               SubmitNewCourse();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CourseScreen(
+                                    course: course,
+                                  ),
+                                ),
+                              ).then((value) {
+                                setState(() {
+                                  initState();
+                                });
+                              });
                             }
                           });
                         },
