@@ -32,7 +32,7 @@ class _CourseScreenState extends State<CourseScreen> {
       updatedCourses.add({'id': course.id});
     }
 
-    FirebaseFirestore.instance.collection('users').doc(email).update({'email': email, 'courses': FieldValue.arrayUnion(updatedCourses)});
+    FirebaseFirestore.instance.collection('users').doc(email).set({'email': email, 'courses': FieldValue.arrayUnion(updatedCourses)});
     UpdateCoursesList();
 
     setState(() {
@@ -49,7 +49,7 @@ class _CourseScreenState extends State<CourseScreen> {
       updatedCourses.add({'id': course.id});
     }
 
-    FirebaseFirestore.instance.collection('users').doc(email).update({'email': email, 'courses': FieldValue.arrayUnion(updatedCourses)});
+    FirebaseFirestore.instance.collection('users').doc(email).update({'email': email, 'courses': updatedCourses});
     UpdateCoursesList();
 
     setState(() {

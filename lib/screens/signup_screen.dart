@@ -7,6 +7,7 @@ import 'package:online_learning/screens/navigation_screen.dart';
 import 'package:online_learning/widgets/button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../items/courses_list.dart';
 import '../widgets/auth_input_field.dart';
 
 const double kHorizontalPadding = 24;
@@ -101,6 +102,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (newUser != null) {
                             await newUser.user!.updateDisplayName(name);
                             FirebaseFirestore.instance.collection('users').doc(email).set({'email': email, 'courses': {}});
+                            courses = [];
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(builder: (context) => NavigationScreen()),
                             );

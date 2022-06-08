@@ -7,7 +7,7 @@ import 'package:online_learning/items/course_material.dart';
 
 List<Course> courses = <Course>[];
 
-void UpdateCoursesList() async {
+Future UpdateCoursesList() async {
   QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('users').get();
   courses = [];
 
@@ -27,6 +27,6 @@ void UpdateCoursesList() async {
         }
       }
     }
-    print("User: " + user['email'].toString());
   }
+  return snapshot;
 }

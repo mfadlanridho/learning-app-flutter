@@ -88,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         try {
                           final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
                           if (user != null) {
+                            await UpdateCoursesList();
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(builder: (context) => NavigationScreen()),
                             );
